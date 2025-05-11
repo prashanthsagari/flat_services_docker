@@ -29,8 +29,7 @@ services:
       - backend
 
   gateway-service:
-    # image: sagariprashanth/gateway-router:1.0
-    image: gateway-router:1.0
+    image: sagariprashanth/gateway-router:2.0
     container_name: gateway-service
     ports:
       - "8889:8889"
@@ -47,8 +46,7 @@ services:
       
 
   favorites-service:
-    # image: sagariprashanth/favorites-service:1.0
-    image: favorites-service:1.0
+    image: sagariprashanth/favorites-service:2.0
     container_name: favorites-service
     ports:
       - "9000:9000"
@@ -63,8 +61,7 @@ services:
       - backend
 
   reviews-service:
-    # image: sagariprashanth/reviews-service:1.0
-    image: reviews-service:1.0
+    image: sagariprashanth/reviews-service:2.0
     container_name: reviews-service
     ports:
       - "9001:9001"
@@ -79,7 +76,7 @@ services:
       - backend
 
   reports-service:
-    image: sagariprashanth/reports-service:1.0
+    image: sagariprashanth/reports-service:2.0
     container_name: reports-service
     ports:
       - "8081:8081"
@@ -87,8 +84,7 @@ services:
       - backend
 
   flatbuddy-service:
-    # image: sagariprashanth/flatbuddy-service:1.0
-    image: flatbuddy-service:1.0
+    image: sagariprashanth/flatbuddy-service:2.0
     container_name: flatbuddy-service
     ports:
       - "8080:8080"
