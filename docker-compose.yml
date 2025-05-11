@@ -28,24 +28,27 @@ services:
     networks:
       - backend
 
-  gateway-router:
-    image: sagariprashanth/gateway-router:1.0
-    container_name: gateway-router
+  gateway-service:
+    # image: sagariprashanth/gateway-router:1.0
+    image: gateway-router:1.0
+    container_name: gateway-service
     ports:
       - "8889:8889"
     depends_on:
-    - favorites-service
-    - flatbuddy-service
-    - reviews-service
+      - reviews-service
+      - reports-service
+      - favorites-service
+      - flatbuddy-service
+      - flat-listing-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:
       - backend
       
-      
 
   favorites-service:
-    image: sagariprashanth/favorites-service:1.0
+    # image: sagariprashanth/favorites-service:1.0
+    image: favorites-service:1.0
     container_name: favorites-service
     ports:
       - "9000:9000"
@@ -60,7 +63,8 @@ services:
       - backend
 
   reviews-service:
-    image: sagariprashanth/reviews-service:1.0
+    # image: sagariprashanth/reviews-service:1.0
+    image: reviews-service:1.0
     container_name: reviews-service
     ports:
       - "9001:9001"
@@ -83,7 +87,8 @@ services:
       - backend
 
   flatbuddy-service:
-    image: sagariprashanth/flatbuddy-service:1.0
+    # image: sagariprashanth/flatbuddy-service:1.0
+    image: flatbuddy-service:1.0
     container_name: flatbuddy-service
     ports:
       - "8080:8080"

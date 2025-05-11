@@ -44,3 +44,24 @@ INSERT INTO user_flat_favorites (user_id, flat_id) VALUES (103, 503);
 INSERT INTO user_flat_favorites (user_id, flat_id) VALUES (101, 504);
 INSERT INTO user_flat_favorites (user_id, flat_id) VALUES (102, 505);
 commit;
+
+
+
+-- create database flatbuddy;
+-- use flatbuddy;
+
+-- INSERT INTO user_table (company_name, contact_number, education, email_id, employment_status, gender, home_town, password, role, userfname, userlname)
+-- VALUES 
+-- ('Infosys', 9876543210, 'B.Tech', 'raj.kumar@example.com', b'1', 'Male', 'Hyderabad', 'raj123', 'USER', 'Raj', 'Kumar');
+
+-- INSERT INTO user_table (company_name, contact_number, education, email_id, employment_status, gender, home_town, password, role, userfname, userlname)
+-- VALUES 
+-- ('TCS', 9123456789, 'MBA', 'anita.mehta@example.com', b'0', 'Female', 'Delhi', 'anita@321', 'ADMIN', 'Anita', 'Mehta');
+
+-- INSERT INTO user_table (company_name, contact_number, education, email_id, employment_status, gender, home_town, password, role, userfname, userlname)
+-- VALUES 
+-- ('Wipro', 9988776655, 'MCA', 'suresh.nair@example.com', b'1', 'Male', 'Kochi', 'suresh456', 'USER', 'Suresh', 'Nair');
+
+-- INSERT INTO user_table (company_name, contact_number, education, email_id, employment_status, gender, home_town, password, role, userfname, userlname)
+-- VALUES 
+-- ('Accenture', 9090909090, 'B.Sc', 'priya.iyer@example.com', b'1', 'Female', 'Chennai', 'priya789', 'USER', 'Priya', 'Iyer');
