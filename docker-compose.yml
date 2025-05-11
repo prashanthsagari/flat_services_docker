@@ -1,0 +1,118 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: flatbuddy
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+  gateway-router:
+    image: sagariprashanth/gateway-router:1.0
+    container_name: gateway-router
+    ports:
+      - "8889:8889"
+    depends_on:
+    - favorites-service
+    - flatbuddy-service
+    - reviews-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - backend
+      
+      
+
+  favorites-service:
+    image: sagariprashanth/favorites-service:1.0
+    container_name: favorites-service
+    ports:
+      - "9000:9000"
+    depends_on:
+      mysql-db:  # updated to match new service name
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/favorite_db?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    networks:
+      - backend
+
+  reviews-service:
+    image: sagariprashanth/reviews-service:1.0
+    container_name: reviews-service
+    ports:
+      - "9001:9001"
+    depends_on:
+      mysql-db:  # updated to match new service name
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/reviews_db?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    networks:
+      - backend
+
+  reports-service:
+    image: sagariprashanth/reports-service:1.0
+    container_name: reports-service
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
+  flatbuddy-service:
+    image: sagariprashanth/flatbuddy-service:1.0
+    container_name: flatbuddy-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-db:  # updated to match new service name
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/flatbuddy?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    networks:
+      - backend
+
+  flat-listing-service:
+    image: sagariprashanth/flat-listing-service:1.0
+    container_name: flat-listing-service
+    ports:
+      - "3001:3000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/flatlisting
+    networks:
+      - backend
+
+volumes:
+  mysql_data:
+  mongo_data:
+
+networks:
+  backend:
+    driver: bridge
